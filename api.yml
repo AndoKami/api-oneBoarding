@@ -1,10 +1,11 @@
 openapi: 3.0.3
 info:
-  title: Onboarding API 
+  title: Onboarding API
   version: '1.2'
   description: STD22050
   contact:
     email: hei.ando.1007@gmail.com
+
 servers:
   - url: http://STD22050.com
   
@@ -21,10 +22,11 @@ paths:
               example:
                 - id: 1
                   name: ando
-                  birthdate: 2023-01-01 
+                  birthdate: '2023-01-01'
                 - id: 2
                   name: kira
-                  birthdate: 2023-01-01 
+                  birthdate: '2023-01-01'
+
     post:
       summary: Add a new student
       operationId: addStudent
@@ -45,7 +47,7 @@ paths:
               example:
                 id: 3
                 name: rakoto 
-                email: 2000-01-01 
+                birthdate: '2000-01-01'
       responses:
         '201':
           description: Student added successfully
@@ -62,4 +64,78 @@ paths:
                     example: ramanantsoa
                   birthdate:
                     type: string
-                    example: 2000-01-01
+                    example: '2000-01-01'
+
+  '/students/{studentId}':
+    put:
+      summary: Update a student's information
+      operationId: updateStudent
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the student to update
+      requestBody:
+        description: Updated student object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                birthdate:
+                  type: string
+              example:
+                name: jean
+                birthdate: '2000-02-02'
+      responses:
+        '200':
+          description: Student updated successfully
+
+    delete:
+      summary: Delete a student
+      description: Delete a student by ID
+      operationId: deleteStudent
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the student to delete
+      responses:
+        '204':
+          description: Student deleted successfully
+
+  /teachers:
+    get:
+      summary: Get all teachers
+      operationId: getAllTeachers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              example:
+                - name: Tokimahery Ramarozaka
+                  courses:
+                    - name: Algorithmique
+                      code: prog1
+                      duration: '2 hours'
+                    - name: Web
+                      code: web1
+                      duration: '2 hours'
+                - name: ryan Andriamahery
+                  courses:
+                    - name: API
+                      code: API
+                      duration: '2 hours'
+                - name: Lou Maurica
+                  courses:
+                    - name: Systeme2
+                      code: sys2
+                      duration: '2 hours'
